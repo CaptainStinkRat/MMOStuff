@@ -1,12 +1,12 @@
 import argparse
-import xlsxwriter
+
 
 def experience(args):
     experienceTotal = args.experience
     print(experienceTotal)
 
 def level(args):
-    print(f"{args.level}")
+    print(args.level)
 
 
 def main():
