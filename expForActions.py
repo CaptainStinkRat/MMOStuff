@@ -14,7 +14,7 @@ def main():
             totalExp = int(args.num) * 75
             if args.startLevel == 1:
                 expStart = 0
-        	if args.startlevel == 2:
+            if args.startlevel == 2:
                 expStart = 83
             if args.startLevel == 3:
                 expStart = 174
@@ -22,14 +22,32 @@ def main():
                 expStart = 276
             if args.startLevel == 5:
                 expStart = 388
-            if args.startLevel == 6
-            43	50,339	4.8K	85	3,258,594	307.2K
-	44	55,649	5.3K	86	3,597,792	339.2K
-	45	61,512	5.9K	87	3,972,294	374.5K
-4	276	102	46	67,983	6.5K	88	4,385,776	413.5K
-5	388	112	47	75,127	7.1K	89	4,842,295	456.5K
-6	512	124	48	83,014	7.9K	90	5,346,332	504K
-7	650	138	49	91,721	8.7K	91	5,902,831	556.5K
+            if args.startLevel == 6:
+		expStart = 512
+	    if args.startLevel == 7:
+		expStart = 650
+        if args.startLevel == 43:
+		expStart =50,339
+	if args.startLevel == 85:
+		expStart = 3,258,594
+	if args.startLevel == 44:
+		expStart = 55,649
+	if args.startLevel == 86:	
+		expStart = 3,597,792	
+	if rags.startLevel == 45:	
+		expStart = 61,512	
+	if args.startLevel == 87:	
+		expStart = 3,972,294	
+	if args.startLevel == 46:	
+		expStart = 67,983	
+	if arg.startLevel == 88:	
+		expStart = 4,385,776	
+	if arg.startLevel == 47:	
+		expStart = 75,127
+	if arg.startLevel == 89:	
+		expStart = 4,842,295	
+	48	83,014	7.9K	90	5,346,332	504K
+	49	91,721	8.7K	91	5,902,831	556.5K
 8	801	151	50	101,333	9.6K	92	6,517,253	614.4K
 9	969	168	51	111,945	10.6K	93	7,195,629	678.4K
 10	1,154	185	52	123,660	11.7K	94	7,944,614	749K
