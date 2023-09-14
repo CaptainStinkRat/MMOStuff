@@ -67,11 +67,11 @@ def meetingGif():
     root.configure(bg='black')
     root.attributes('-fullscreen',True)
     root.title("In a meeting")
-    framecnt= 16
+    framecnt= 35
     frames = [PhotoImage(file='./meeting.gif',format='gif -index %i' %(i)) for i in range(framecnt)]
 
     def update(ind):
-        time.sleep(0.15)
+        time.sleep(0.1)
         frame = frames[ind]
         ind += 1
         if ind == framecnt:
@@ -112,8 +112,30 @@ def busyGif():
     backButton = Button(root,text='Back',command=root.destroy)
     backButton['font']=myFont
     backButton.pack()
+def idleGif():
+    win.destroy()
+    root = Tk()
+    root.configure(bg='black')
+    root.attributes('-fullscreen',True)
+    root.geometry('800x480')
+    root.title("Idle")
+    framecnt= 48
+    frames = [PhotoImage(file='./idle.gif',format='gif -index %i' %(i)) for i in range(framecnt)]
 
-
+    def update(ind):
+        time.sleep(0.06)
+        frame = frames[ind]
+        ind += 1
+        if ind == framecnt:
+            ind = 0
+        label.configure(image=frame)
+        win.after(1,update,ind)
+    label = Label(root,text='Busy working')
+    label.pack()
+    root.after(0,update,0)
+    backButton = Button(root,text='Back',command=root.destroy)
+    backButton['font']=myFont
+    backButton.pack()
 # def gifPlay():
 #     win.destroy()
 
@@ -138,6 +160,9 @@ meetingButton['font']=myFont
 busyButton=Button(win,text = 'Busy',command=busyGif)
 busyButton.grid(column=1,row=1,sticky='NSEW')
 busyButton['font']=myFont
+idleButton=Button(win,text = 'Idle',command=idleGif)
+idleButton.grid(columnspan=2,row=2,sticky='NSEW')
+idleButton['font']=myFont
     # Button(win,text='At lunch',command=gifPlay).pack()
 win.mainloop()
 
