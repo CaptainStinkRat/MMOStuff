@@ -3,6 +3,7 @@ from tkinter import ttk
 import tkinter as tk
 import time
 import os
+import tkinter.font as font
 # win = Tk()
 # win.geometry('800x480')
 # win.attributes('-fullscreen',True)
@@ -11,7 +12,6 @@ import os
 # Grid.columnconfigure(win,0,weight=1)
 # Grid.rowconfigure(win,1,weight=1)
 # Grid.columnconfigure(win,1,weight=1)
-
 def eatingGif():
     win.destroy()
     root = Tk()
@@ -30,9 +30,12 @@ def eatingGif():
         win.after(1,update,ind)
     label = Label(root)
     label.pack()
-    title = Label(root,text='On lunch',font=('Arial',25),fg='#FFFFFF',bg='#000000')
+    title = Label(root,text='On lunch',font=('Arial',35),fg='#FFFFFF',bg='#000000')
     title.pack()
     root.after(0,update,0)
+    backButton = Button(root,text='Back',command=root.destroy)
+    backButton['font']=myFont
+    backButton.pack()
 def walkGif():
     win.destroy()
     root = Tk()
@@ -52,16 +55,19 @@ def walkGif():
         win.after(1,update,ind)
     label = Label(root)
     label.pack()
-    title = Label(root,text='On a walk',font=('Arial',25),fg='#FFFFFF',bg='#000000')
+    title = Label(root,text='On a walk',font=('Arial',35),fg='#FFFFFF',bg='#000000')
     title.pack()
     root.after(0,update,0)
+    backButton = Button(root,text='Back',command=root.destroy)
+    backButton['font']=myFont
+    backButton.pack()
 def meetingGif():
     win.destroy()
     root = Tk()
     root.configure(bg='black')
     root.attributes('-fullscreen',True)
     root.title("In a meeting")
-    framecnt= 10
+    framecnt= 16
     frames = [PhotoImage(file='./meeting.gif',format='gif -index %i' %(i)) for i in range(framecnt)]
 
     def update(ind):
@@ -74,9 +80,12 @@ def meetingGif():
         win.after(1,update,ind)
     label = Label(root)
     label.pack()
-    title = Label(root,text='In a meeting',font=('Arial',25),fg='#FFFFFF',bg='#000000')
+    title = Label(root,text='In a meeting',font=('Arial',35),fg='#FFFFFF',bg='#000000')
     title.pack()
     root.after(0,update,0)
+    backButton = Button(root,text='Back',command=root.destroy)
+    backButton['font']=myFont
+    backButton.pack()
 def busyGif():
     win.destroy()
     root = Tk()
@@ -97,15 +106,16 @@ def busyGif():
         win.after(1,update,ind)
     label = Label(root,text='Busy working')
     label.pack()
-    title = Label(root,text='Busy',font=('Arial',25),fg='#FFFFFF',bg='#000000')
+    title = Label(root,text='Busy',font=('Arial',35),fg='#FFFFFF',bg='#000000')
     title.pack()
     root.after(0,update,0)
-    
-    
-    
+    backButton = Button(root,text='Back',command=root.destroy)
+    backButton['font']=myFont
+    backButton.pack()
+
+
 # def gifPlay():
 #     win.destroy()
-
 
 win = Tk()
 win.geometry('800x480')
@@ -115,14 +125,19 @@ Grid.rowconfigure(win,0,weight=1)
 Grid.columnconfigure(win,0,weight=1)
 Grid.rowconfigure(win,1,weight=1)
 Grid.columnconfigure(win,1,weight=1)
-lunchButton=ttk.Button(win,text = 'At lunch',command=eatingGif)
+myFont = font.Font(family='Helvetica',size=35,weight='bold')
+lunchButton=Button(win,text = 'At lunch',command=eatingGif)
+lunchButton['font']=myFont
 lunchButton.grid(column=0,row=0,sticky="NSEW")
-walkButton = ttk.Button(win,text = 'On a walk',command=walkGif)
+walkButton = Button(win,text = 'On a walk',command=walkGif)
 walkButton.grid(column=0,row=1,sticky='NSEW')
-meetingButton=ttk.Button(win,text = 'In a meeting',command=meetingGif)
+walkButton['font']=myFont
+meetingButton=Button(win,text = 'In a meeting',command=meetingGif)
 meetingButton.grid(column=1,row=0,sticky='NSEW')
-busyButton=ttk.Button(win,text = 'Busy',command=busyGif)
+meetingButton['font']=myFont
+busyButton=Button(win,text = 'Busy',command=busyGif)
 busyButton.grid(column=1,row=1,sticky='NSEW')
+busyButton['font']=myFont
     # Button(win,text='At lunch',command=gifPlay).pack()
 win.mainloop()
 
