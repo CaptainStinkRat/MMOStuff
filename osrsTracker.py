@@ -25,6 +25,7 @@ def bossFinish(args):
     lookupUser = args.user
     dataLog = open('bossLog.json')
     data = json.load(dataLog)
+    os.remove("bossLog.json")
     if data['User'] == f'{str(lookupUser)}':
         bossingUserStats = data['User']
         bossUser = Hiscores(bossingUserStats)
@@ -41,6 +42,15 @@ def bossFinish(args):
         fT = datetime.strptime(finishTime,"%H:%M:%S")
         totalTime = fT - sT
         print("Time lapsed: "+str(totalTime)+" and "+str(bossTotal)+" killed in that time.")
+        log ={
+            "Boss":f"{str(args.boss)}",
+            "User":f"{bossingUserStats}",
+            "timeLapsed":f"{totalTime}",
+            "totalKilled":f"{bossTotal}"
+        }
+        jsonObject = json.dumps(log,indent=4)
+        with open("bossEndLog.json",'w') as outfile:
+            outfile.write(jsonObject)
 def main():
     parser = argparse.ArgumentParser(description='Boss Tracker')
     parser.add_argument("-s","--start",default = None,action="store_true",help='Start of the bossing log')
