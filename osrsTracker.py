@@ -2,7 +2,7 @@ from OSRSBytes import Hiscores
 from OSRSBytes import Items
 import argparse
 import os
-import datetime
+from datetime import datetime
 import json
 
 def bossStart(args):
@@ -10,8 +10,10 @@ def bossStart(args):
     bossingUser = Hiscores(lookupUser)
     bossStartNumber = bossingUser.boss(f'{str(args.boss)}','score')
     print("Starting boss number is: "+str(bossStartNumber))
-    startTime = datetime.datetime.now()
+    sTime = datetime.now()
+    startTime = sTime.strftime("%H:%M:%S")
     log ={
+        "Boss":f"{str(args.boss)}",
         "User":f"{lookupUser}",
         "bossTime":f"{startTime}",
         "bossStartNumber":f"{bossStartNumber}"
@@ -21,19 +23,24 @@ def bossStart(args):
         outfile.write(jsonObject)
 def bossFinish(args):
     lookupUser = args.user
-    bossingUser = Hiscores(lookupUser)
     dataLog = open('bossLog.json')
     data = json.load(dataLog)
     if data['User'] == f'{str(lookupUser)}':
-        finishTime = datetime.datetime.now()
-        finishTimeStamp = int(finishTime.timestamp())
-        dateFormat = '%Y-%m-%d %H:%M:%S'
+        bossingUserStats = data['User']
+        bossUser = Hiscores(bossingUserStats)
+        bossingUserStart=data['bossStartNumber']
+        boss = data['Boss']
+        bossFinish = bossUser.boss(f'{boss}')
+        bossTotal = int(bossingUserStart)-int(bossFinish)
+        fTime = datetime.now()
+        finishTime = fTime.strftime("%H:%M:%S")
+        #finishTimeStamp = int(finishTime)
         dateStr = data['bossTime']
-        dateObj = datetime.strptime(dateStr,dateFormat)
-        startTimeStamp = int(dateObj)
-        totalTime = finishTimeStamp - startTimeStamp
-        dateTimeObj = datetime.fromtimestamp(totalTime)
-        print("Time lapsed: "+str(dateTimeObj))
+        #startTimeStamp = int(dateStr)
+        sT = datetime.strptime(dateStr,"%H:%M:%S")
+        fT = datetime.strptime(finishTime,"%H:%M:%S")
+        totalTime = fT - sT
+        print("Time lapsed: "+str(totalTime)+" and "+str(bossTotal)+" killed in that time.")
 def main():
     parser = argparse.ArgumentParser(description='Boss Tracker')
     parser.add_argument("-s","--start",default = None,action="store_true",help='Start of the bossing log')
