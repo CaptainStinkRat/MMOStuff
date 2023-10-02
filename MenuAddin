@@ -1,5 +1,7 @@
 import tkinter as tk
-
+from OSRSBytes import Hiscores
+from OSRSBytes import Items
+import json
 import tkinter.font as font
 import time
 from tkinter import *
@@ -16,23 +18,48 @@ class Menu(tk.Tk):
         # self.timeLabel['font'] = self.myFont
         self.isRunning = False
         self.startTime = time.time()
+        self.bossUser = Hiscores('dad_pvmer')
         self.createWidgets()
     def createWidgets(self):    
         # self.startButton = Button(self,text='Start timer',command=self.start)
         # self.startButton['font'] =self.myFont
         # self.startButton.pack()
-        self.wintertodtButton = Button(self,text='Wintertodt',command=self.startButtonAdd)
+        self.wintertodtButton = Button(self,text='Wintertodt',command=self.wintertodtStart)
         self.wintertodtButton['font'] = self.myFont
         self.wintertodtButton.grid(column=0,row=0)
-
-        
+        self.kbdButton = Button(self,text='King Black Dragon',command=self.startButtonAdd)
+        self.kbdButton['font']=self.myFont
+        self.kbdButton.grid(column=1,row=0)
+        self.giantMoleButton = Button(self,text='Giant Mole',command=self.startButtonAdd)
+        self.giantMoleButton['font']=self.myFont
+        self.giantMoleButton.grid(column=2,row=0)
+        self.kalphiteQueenButton = Button(self,text='Kalphite Queen',command=self.startButtonAdd)
+        self.kalphiteQueenButton['font']=self.myFont
+        self.kalphiteQueenButton.grid(column=3,row=0)
+        self.cerberusButton = Button(self,text='Cerberus',command=self.startButtonAdd)
+        self.cerberusButton['font']=self.myFont
+        self.cerberusButton.grid(column=0,row=1)
     def updateTime(self):
         if self.isRunning:
-            elapsedTime=time.time() - self.startTime
-            self.timeLabel.config(text="{:.2f}".format(elapsedTime))
+            self.elapsedTime=time.time() - self.startTime
+            self.timeLabel.config(text="{:.2f}".format(self.elapsedTime))
             self.timeLabel.after(50,self.updateTime)
+    def wintertodtStart(self):
+        self.bossStartNumber = self.bossUser.boss('wintertodt','score')
+        self.wintertodtButton.destroy()
+        self.kbdButton.destroy()
+        self.giantMoleButton.destroy()
+        self.kalphiteQueenButton.destroy()
+        self.cerberusButton.destroy()
+        self.startButton = Button(self,text='Start timer',command=self.start)
+        self.startButton['font'] =self.myFont
+        self.startButton.grid(column=2,row=1)
     def startButtonAdd(self):
         self.wintertodtButton.destroy()
+        self.kbdButton.destroy()
+        self.giantMoleButton.destroy()
+        self.kalphiteQueenButton.destroy()
+        self.cerberusButton.destroy()
         self.startButton = Button(self,text='Start timer',command=self.start)
         self.startButton['font'] =self.myFont
         self.startButton.grid(column=2,row=1)
@@ -50,6 +77,14 @@ class Menu(tk.Tk):
             self.updateTime()
     def stop(self):
         self.isRunning = False
+        log = {
+            "User":"dad_pvmer",
+            "bossTime":f'{self.elapsedTime}',
+            'bossStartNumber':f'{self.bossStartNumber}'
+        }
+        jsonObject = json.dumps(log,indent=4)
+        with open("bossLog.json",'w') as outfile:
+            outfile.write(jsonObject)
 if __name__=='__main__':
     app=Menu()
     app.mainloop()
