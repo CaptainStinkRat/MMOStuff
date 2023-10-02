@@ -24,16 +24,23 @@ class Menu(tk.Tk):
         self.wintertodtButton = Button(self,text='Wintertodt',command=self.startButtonAdd)
         self.wintertodtButton['font'] = self.myFont
         self.wintertodtButton.grid(column=0,row=0)
+
+        
     def updateTime(self):
         if self.isRunning:
             elapsedTime=time.time() - self.startTime
             self.timeLabel.config(text="{:.2f}".format(elapsedTime))
             self.timeLabel.after(50,self.updateTime)
     def startButtonAdd(self):
+        self.wintertodtButton.destroy()
         self.startButton = Button(self,text='Start timer',command=self.start)
         self.startButton['font'] =self.myFont
         self.startButton.grid(column=2,row=1)
     def start(self):
+        self.startButton.destroy()
+        self.stopButton = Button(self,text='Stop timer',command=self.stop)
+        self.stopButton['font'] =self.myFont
+        self.stopButton.grid(column=2,row=1)
         self.timeLabel = tk.Label(self,text='0.00')
         self.timeLabel.grid(column=2,row=3)
         self.timeLabel['font'] = self.myFont
@@ -41,7 +48,8 @@ class Menu(tk.Tk):
             self.isRunning = True
             self.startTime = time.time()
             self.updateTime()
-
+    def stop(self):
+        self.isRunning = False
 if __name__=='__main__':
     app=Menu()
     app.mainloop()
