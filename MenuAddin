@@ -1,0 +1,47 @@
+import tkinter as tk
+
+import tkinter.font as font
+import time
+from tkinter import *
+
+class Menu(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry('800x480')
+        self.attributes('-fullscreen',True)
+        self.configure(background='black')
+        self.myFont = font.Font(family='Helvetica' ,size=35,weight='bold')
+        # self.timeLabel = tk.Label(self,text='0.00')
+        # self.timeLabel.pack()
+        # self.timeLabel['font'] = self.myFont
+        self.isRunning = False
+        self.startTime = time.time()
+        self.createWidgets()
+    def createWidgets(self):    
+        # self.startButton = Button(self,text='Start timer',command=self.start)
+        # self.startButton['font'] =self.myFont
+        # self.startButton.pack()
+        self.wintertodtButton = Button(self,text='Wintertodt',command=self.startButtonAdd)
+        self.wintertodtButton['font'] = self.myFont
+        self.wintertodtButton.grid(column=0,row=0)
+    def updateTime(self):
+        if self.isRunning:
+            elapsedTime=time.time() - self.startTime
+            self.timeLabel.config(text="{:.2f}".format(elapsedTime))
+            self.timeLabel.after(50,self.updateTime)
+    def startButtonAdd(self):
+        self.startButton = Button(self,text='Start timer',command=self.start)
+        self.startButton['font'] =self.myFont
+        self.startButton.grid(column=2,row=1)
+    def start(self):
+        self.timeLabel = tk.Label(self,text='0.00')
+        self.timeLabel.grid(column=2,row=3)
+        self.timeLabel['font'] = self.myFont
+        if not self.isRunning:
+            self.isRunning = True
+            self.startTime = time.time()
+            self.updateTime()
+
+if __name__=='__main__':
+    app=Menu()
+    app.mainloop()
