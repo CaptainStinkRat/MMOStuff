@@ -139,14 +139,14 @@ class Menu(tk.Tk):
         self.krakenButton.destroy()
         self.startButton = Button(self,text='Start timer',command=self.start)
         self.startButton['font'] =self.myFont
-        self.startButton.grid(column=0,row=1,sticky="NSEW")
+        self.startButton.grid(column=0,row=0,sticky="NSEW")
     def start(self):
         self.startButton.destroy()
         self.stopButton = Button(self,text='Stop timer',command=self.stop)
         self.stopButton['font'] =self.myFont
-        self.stopButton.grid(column=0,row=1,sticky="NSEW")
+        self.stopButton.grid(column=0,row=0,sticky="NSEW")
         self.timeLabel = tk.Label(self,text='0.00')
-        self.timeLabel.grid(column=0,row=2,sticky="NSEW")
+        self.timeLabel.grid(column=0,row=1,sticky="NSEW")
         self.timeLabel['font'] = self.myFont
         sTime = datetime.now()
         startTime = sTime.strftime("%H:%M:%S")
