@@ -33,13 +33,13 @@ class Menu(tk.Tk):
         self.wintertodtButton = Button(self,text='Wintertodt',command=self.wintertodtStart)
         self.wintertodtButton['font'] = self.myFont
         self.wintertodtButton.grid(column=0,row=0,sticky="NSEW")
-        self.kbdButton = Button(self,text='King Black Dragon',command=self.kbdStart)
+        self.kbdButton = Button(self,text='KBD',command=self.kbdStart)
         self.kbdButton['font']=self.myFont
         self.kbdButton.grid(column=1,row=0,sticky="NSEW")
         self.giantMoleButton = Button(self,text='Giant Mole',command=self.giantMoleStart)
         self.giantMoleButton['font']=self.myFont
         self.giantMoleButton.grid(column=0,row=1,sticky="NSEW")
-        self.kalphiteQueenButton = Button(self,text='Kalphite Queen',command=self.kqStart)
+        self.kalphiteQueenButton = Button(self,text='KQ',command=self.kqStart)
         self.kalphiteQueenButton['font']=self.myFont
         self.kalphiteQueenButton.grid(column=1,row=1,sticky="NSEW")
         self.cerberusButton = Button(self,text='Cerberus',command=self.cerberusStart)
