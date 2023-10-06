@@ -4,6 +4,7 @@ import argparse
 import os
 from datetime import datetime
 import json
+import mariadb
 
 def bossStart(args):
     lookupUser = args.user
@@ -51,6 +52,19 @@ def bossFinish(args):
         jsonObject = json.dumps(log,indent=4)
         with open("bossEndLog.json",'w') as outfile:
             outfile.write(jsonObject)
+        conn = mariadb.connect(
+            user='root',
+            password='password',
+            host='172.17.0.1',
+            database='BossLog'
+        )
+        cur = conn.cursor()
+        try:
+            cur.execute("INSERT INTO BossLog (User,TimeSpent,BossesKilled,BossName) VALUES (?,?,?,?)", (f"{bossingUserStats}",f"{totalTime}",f"{bossTotal}",f"{str(args.boss)}"))
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+        conn.commit()
+        conn.close()
 def main():
     parser = argparse.ArgumentParser(description='Boss Tracker')
     parser.add_argument("-s","--start",default = None,action="store_true",help='Start of the bossing log')
