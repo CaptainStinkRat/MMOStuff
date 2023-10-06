@@ -7,6 +7,7 @@ import time
 from datetime import datetime
 from tkinter import *
 import os
+import mariadb
 
 class Menu(tk.Tk):
     def __init__(self):
@@ -33,13 +34,13 @@ class Menu(tk.Tk):
         self.wintertodtButton = Button(self,text='Wintertodt',command=self.wintertodtStart)
         self.wintertodtButton['font'] = self.myFont
         self.wintertodtButton.grid(column=0,row=0,sticky="NSEW")
-        self.kbdButton = Button(self,text='KBD',command=self.kbdStart)
+        self.kbdButton = Button(self,text='King Black Dragon',command=self.kbdStart)
         self.kbdButton['font']=self.myFont
         self.kbdButton.grid(column=1,row=0,sticky="NSEW")
         self.giantMoleButton = Button(self,text='Giant Mole',command=self.giantMoleStart)
         self.giantMoleButton['font']=self.myFont
         self.giantMoleButton.grid(column=0,row=1,sticky="NSEW")
-        self.kalphiteQueenButton = Button(self,text='KQ',command=self.kqStart)
+        self.kalphiteQueenButton = Button(self,text='Kalphite Queen',command=self.kqStart)
         self.kalphiteQueenButton['font']=self.myFont
         self.kalphiteQueenButton.grid(column=1,row=1,sticky="NSEW")
         self.cerberusButton = Button(self,text='Cerberus',command=self.cerberusStart)
@@ -139,14 +140,14 @@ class Menu(tk.Tk):
         self.krakenButton.destroy()
         self.startButton = Button(self,text='Start timer',command=self.start)
         self.startButton['font'] =self.myFont
-        self.startButton.grid(column=0,row=0,sticky="NSEW")
+        self.startButton.grid(column=0,row=1,sticky="NSEW")
     def start(self):
         self.startButton.destroy()
         self.stopButton = Button(self,text='Stop timer',command=self.stop)
         self.stopButton['font'] =self.myFont
-        self.stopButton.grid(column=0,row=0,sticky="NSEW")
+        self.stopButton.grid(column=0,row=1,sticky="NSEW")
         self.timeLabel = tk.Label(self,text='0.00')
-        self.timeLabel.grid(column=0,row=1,sticky="NSEW")
+        self.timeLabel.grid(column=0,row=2,sticky="NSEW")
         self.timeLabel['font'] = self.myFont
         sTime = datetime.now()
         startTime = sTime.strftime("%H:%M:%S")
@@ -200,6 +201,19 @@ class Menu(tk.Tk):
         self.exitButton = Button(self,text='Exit',command=self.exit)
         self.exitButton['font']=self.myFont
         self.exitButton.grid(row=1,column=1,sticky='NSEW')
+        conn = mariadb.connect(
+            user='root',
+            password='password',
+            host='172.17.0.1',
+            database='BossLog'
+        )
+        cur = conn.cursor()
+        try:
+            cur.execute("INSERT INTO BossLog (User,TimeSpent,BossesKilled,BossName) VALUES (?,?,?,?)", ("dad_pvmer",f"{totalTime}",f"{self.bossEndNumber}",f"{self.boss}"))
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+        conn.commit()
+        conn.close()
     def exit(self):
         self.destroy()
 if __name__=='__main__':
