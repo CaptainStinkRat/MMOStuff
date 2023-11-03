@@ -1,0 +1,37 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import * 
+
+class Login(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry('200x120')
+        self.title('User login')
+        self.passwordEntry= tk.StringVar(self)
+        self.usernameEntry = tk.StringVar(self)
+        self.createWidgets()
+
+    def createWidgets(self):
+        self.username = Entry(self,textvariable=self.usernameEntry)
+        self.username.insert(0,'Username')
+        self.username.bind('<FocusIn>',self.tempUsernameText)
+        self.username.pack()
+        self.registerButton = ttk.Button(self,text='Create account',command=self.createUser)
+        self.registerButton.pack()
+    def createUser(self):
+        createUserFrame = Tk()
+        createUserFrame.geometry('800x480')
+        self.firstNameEntry = tk.StringVar(createUserFrame)
+        self.lastNameEntry = tk.StringVar(createUserFrame)
+        self.firstName = Entry(createUserFrame,textvariable=self.firstNameEntry)
+        self.firstName.insert(0,'First Name')
+        self.firstName.bind('<FocusIn>',self.tempFirstNameText)
+        self.firstName.grid(row=0,column=0)
+        self.lastName = Entry
+    def tempFirstNameText(self,e):
+        self.firstName.delete(0,'end')
+    def tempUsernameText(self,e):
+        self.username.delete(0,'end')
+if __name__=='__main__':
+    loginAttempt = Login()
+    loginAttempt.mainloop()
